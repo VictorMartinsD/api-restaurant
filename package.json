@@ -8,6 +8,7 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
+    "knex": "node --import tsx ./node_modules/knex/bin/cli.js",
     "build": "rimraf dist && tsc -p ts.config.json --outDir dist",
     "start": "node dist/server.js",
     "lint": "eslint .",
@@ -38,6 +39,8 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "knex": "^3.1.0",
+    "sqlite3": "^5.1.7"
   }
 }
