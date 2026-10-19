@@ -1,18 +1,12 @@
-import type { IncomingMessage, ServerResponse } from "node:http";
-import { URL } from "node:url";
+import express from "express";
+import { routes } from "./routes/index.js";
 
-function sendJson(response: ServerResponse, statusCode: number, body: object) {
-  response.writeHead(statusCode, { "Content-Type": "application/json; charset=utf-8" });
-  response.end(JSON.stringify(body));
-}
+export const app = express();
 
-export function app(request: IncomingMessage, response: ServerResponse) {
-  const requestUrl = new URL(request.url ?? "/", `http://${request.headers.host ?? "localhost"}`);
+app.use(express.json());
 
-  if (request.method === "GET" && requestUrl.pathname === "/health") {
-    sendJson(response, 200, { status: "ok" });
-    return;
-  }
+app.get("/health", (_request, response) => {
+  response.json({ status: "ok" });
+});
 
-  sendJson(response, 404, { error: "Route not found" });
-}
+app.use(routes);
